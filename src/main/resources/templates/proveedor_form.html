@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Proveedor</title>
+</head>
+<body>
+    <h1>Registrar Nuevo Proveedor</h1>
+    <form th:action="@{${proveedor.id_proveedor} != null ? '/proveedor/actualizar/' + ${proveedor.id_proveedor} : '/proveedores/guardar'}"
+      th:object="${proveedor}" method="post">
+
+
+
+        <label>Nombre:</label>
+        <input type="text" th:field="*{nombre}" required><br>
+
+        <label>Contacto:</label>
+        <input type="text" th:field="*{contacto}"><br>
+
+        <label>Teléfono:</label>
+        <input type="text" th:field="*{telefono}" required><br>
+
+        <label>Email:</label>
+        <input type="email" th:field="*{email}" required><br>
+
+        <label>Dirección:</label>
+        <textarea th:field="*{direccion}"></textarea><br>
+
+        <button type="submit">Guardar</button>
+    </form>
+
+    <br>
+    <a th:href="@{/proveedores}">Volver a la lista</a>
+</body>
+</html>
