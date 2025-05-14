@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Productos</title>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    <a th:href="@{/productos/nuevo}">Crear Nuevo Producto</a>
+    <a th:href="@{/}" >Volver al Inicio</a>
+
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Proveedor</th>
+            <th>Descripción</th>
+            <th>Actiones</th> <!-- NUEVA COLUMNA -->
+        </tr>
+        <tr th:each="producto : ${productos}">
+            <td th:text="${producto.id_producto}"></td>
+            <td th:text="${producto.nombre}"></td>
+            <td th:text="${producto.marca}"></td>
+            <td th:text="${producto.precio}"></td>
+            <td th:text="${producto.stock}"></td>
+            <td th:text="${producto.proveedor.nombre}"></td>
+            <td th:text="${producto.descripcion}"></td>
+
+            <!-- FORMULARIO PARA SUBIR IMAGEN -->
+            <td>
+               <form th:action="@{/imagenes/producto/{id}/subir(id=${producto.id_producto})}"
+              method="post" enctype="multipart/form-data">
+            <input type="file" name="archivo" accept=".png,.jpg,.jpeg" required />
+            <button type="submit">Subir Imagen</button>
+        </form>
+         <a th:href="@{/productos/editar/{id}(id=${producto.id_producto})}">Editar</a>
+            <a th:href="@{/productos/eliminar/{id}(id=${producto.id_producto})}"
+                   onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+                   Eliminar
+                </a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

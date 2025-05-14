@@ -58,21 +58,6 @@ public String guardarProveedor(@ModelAttribute Proveedor proveedor, Model model)
 }
 
 
-@GetMapping("/proveedor/eliminar/{id}")
-public String eliminarProveedor(@PathVariable Long id) {
-    proveedorService.eliminarProveedor(id);
-    return "redirect:/proveedores";
-}
-
-
-
-
-
-
-
-
-
-
 @GetMapping("/proveedor/editar/{id}")
 public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model) {
     Proveedor proveedor = proveedorService.obtenerProveedorPorId(id);
@@ -100,6 +85,8 @@ public String actualizarProveedor(@PathVariable Long id, @ModelAttribute("provee
 }
 
 
+
+// ahcer para eliminar si es seguro.
 
     
 }
