@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aethercubix.model.Proveedor;
 import com.aethercubix.service.ProveedorService;
@@ -87,6 +88,20 @@ public String actualizarProveedor(@PathVariable Long id, @ModelAttribute("provee
 
 
 // ahcer para eliminar si es seguro.
+
+
+@GetMapping("/proveedor/eliminar/{id}")
+public String eliminarProveedor(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+    boolean eliminado = proveedorService.eliminarProveedorSiNoTieneProductos(id);
+    if (eliminado) {
+        redirectAttributes.addFlashAttribute("mensaje", "Proveedor eliminado correctamente.");
+    } else {
+        redirectAttributes.addFlashAttribute("error", "No se puede eliminar el proveedor. Tiene productos asociados.");
+    }
+    return "redirect:/proveedores";
+}
+
+
 
     
 }

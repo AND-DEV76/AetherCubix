@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Venta</title>
+</head>
+
+<a th:href="@{/}" >Volver al Inicio</a>
+
+<h2>Venta registrada</h2>
+<p>Cliente: <span th:text="${venta.nombre_cliente}"></span></p>
+<p>NIT: <span th:text="${venta.nit_cliente}"></span></p>
+<p>Fecha: <span th:text="${venta.fecha_venta}"></span></p>
+<p>Estado: <span th:text="${venta.estado}"></span></p>
+
+<table>
+    <tr>
+        <th>Producto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th>
+    </tr>
+    <tr th:each="d : ${venta.detalles}">
+        <td th:text="${d.producto.nombre}"></td>
+        <td th:text="${d.cantidad}"></td>
+        <td th:text="${d.precio_unitario}"></td>
+        <td th:text="${d.subtotal}"></td>
+    </tr>
+</table>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>EFactura</title>
+</head>
+
+<a th:href="@{/}" >Volver al Inicio</a>
+<form th:action="@{/factura}" method="post">
+    <input name="nombre_cliente" placeholder="Nombre cliente" required>
+    <input name="nit_cliente" placeholder="NIT" required>
+
+    <select name="metodo_pago">
+        <option value="efectivo">Efectivo</option>
+        <option value="tarjeta">Tarjeta</option>
+    </select>
+
+    <select name="estado">
+        <option value="pendiente">Pendiente</option>
+        <option value="cancelado">Cancelado</option>
+    </select>
+
+    <div id="productos">
+        <div th:each="p : ${productos}">
+            <input type="checkbox" name="productoIds" th:value="${p.id_producto}"/>
+            <span th:text="${p.nombre} + ' - ' + ${p.precio}"></span>
+            <input type="number" name="cantidades" min="1" value="1"/>
+        </div>
+    </div>
+
+    <button type="submit">Guardar Venta</button>
+</form>
+
+</html>

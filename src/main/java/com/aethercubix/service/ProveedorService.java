@@ -1,8 +1,10 @@
 package com.aethercubix.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aethercubix.model.Proveedor;
+import com.aethercubix.repository.ProductoRepository;
 import com.aethercubix.repository.ProveedorRepository;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +15,10 @@ import java.util.Optional;
 public class ProveedorService {
 
     private final ProveedorRepository proveedorRepository;
+
+
+    @Autowired
+    private ProductoRepository productoRepository;
 
   
 
@@ -38,10 +44,21 @@ public class ProveedorService {
 }
 
 
-public void eliminarProveedor(Long id) {
-    proveedorRepository.deleteById(id);
-}
 
+ public boolean eliminarProveedorSiNoTieneProductos(Integer idProveedor) {
+        Optional<Proveedor> proveedorOpt = proveedorRepository.findById(idProveedor.longValue());
+        if (proveedorOpt.isPresent()) {
+            Proveedor proveedor = proveedorOpt.get();
+            long cantidadProductos = productoRepository.countByProveedor(proveedor);
+            if (cantidadProductos == 0) {
+                proveedorRepository.delete(proveedor);
+                return true; // Eliminado correctamente
+            } else {
+                return false; // No se puede eliminar
+            }
+        }
+        return false; // No encontrado
+    }
 
 
     
