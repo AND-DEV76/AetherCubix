@@ -1,0 +1,130 @@
+/* Fondo general */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Título centrado */
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    color: #a5b4fc;
+}
+
+/* Contenedor del formulario */
+form {
+    background-color: rgba(31, 31, 46, 0.85); /* Transparente */
+    padding: 30px 40px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Etiquetas */
+label {
+    font-weight: bold;
+    color: #cdd6f4;
+}
+
+/* Inputs y textarea */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: #121212;
+    color: #ffffff;
+    border: 1px solid #3b3b4f;
+    border-radius: 8px;
+    font-size: 14px;
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #a5b4fc;
+    box-shadow: 0 0 4px #a5b4fc;
+}
+
+/* Botón de guardar */
+button[type="submit"] {
+    background-color: #a5b4fc;
+    color: #121212;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #8b9dfd;
+}
+
+/* Enlace de volver */
+a {
+    color: #a5b4fc;
+    margin-top: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #c3baff;
+}
+
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Botón Cancelar */
+.cancel-button {
+    background-color: transparent;
+    color: #a5b4fc;
+    padding: 10px 20px;
+    border: 1px solid #a5b4fc;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.cancel-button:hover {
+    background-color: #1f1f2e;
+    color: #c3baff;
+}
+
+/* Botón Guardar (puedes personalizarlo más si deseas) */
+button[type="submit"] {
+    background-color: #a5b4fc;
+    color: #121212;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #8b9dfd;
+}
+

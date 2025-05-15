@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Editar Producto</title>
+    <link rel="stylesheet" href="/css/editarproducto.css">
 </head>
 <body>
     <h1>Editar Producto</h1>
@@ -32,9 +33,16 @@
                     th:text="${prov.nombre}"></option>
         </select><br>
 
-        <button type="submit">Actualizar</button>
+        <div class="form-buttons">
+            <button type="submit">Actualizar</button>
+            <a th:href="@{/productos}">Cancelar</a>
+
+        </div>
+        
     </form>
 
-    <a th:href="@{/productos}">Cancelar</a>
+   
+
+
 </body>
 </html>

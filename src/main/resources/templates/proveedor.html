@@ -3,47 +3,32 @@
 <head>
     <title>Lista de Proveedores</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" href="/css/proveedor.css">
 </head>
 <body>
-    <h1>Lista de Proveedores</h1>
-    <a th:href="@{/proveedores/nuevo}">
-    <button>Agregar Proveedor</button>
-</a>
-<a th:href="@{/}" >Volver al Inicio</a>
+    <div class="container">
+        <h1>Lista de Proveedores</h1>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Contacto</th>
-                <th>Teléfono</th>
-                <th>Email</th>
-                <th>Dirección</th>
-                <th>Fecha de Registro</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="prov : ${proveedores}">
-                <td th:text="${prov.id_proveedor}"></td>
-                <td th:text="${prov.nombre}"></td>
-                <td th:text="${prov.contacto}"></td>
-                <td th:text="${prov.telefono}"></td>
-                <td th:text="${prov.email}"></td>
-                <td th:text="${prov.direccion}"></td>
-                <td th:text="${prov.fecha_registro}"></td>
-                <td><a th:href="@{'/proveedor/editar/' + ${prov.id_proveedor}}">Editar</a>
-                <a th:href="@{'/proveedor/eliminar/' + ${prov.id_proveedor}}" 
-       onclick="return confirm('¿Estás seguro de que quieres eliminar este proveedor?');">Eliminar</a>
-    </th>
+        <div class="btn-group">
+            <a th:href="@{/proveedores/nuevo}" class="btn">Agregar Proveedor</a>
+            <a th:href="@{/}" class="btn">Volver al Inicio</a>
+        </div>
 
-            </tr>
-        </tbody>
-    </table>
-
-    <br>
-    
+        <div class="card-container">
+            <div class="card" th:each="prov : ${proveedores}">
+                <p><strong>Nombre:</strong> <span th:text="${prov.nombre}"></span></p>
+                <p><strong>Contacto:</strong> <span th:text="${prov.contacto}"></span></p>
+                <p><strong>Teléfono:</strong> <span th:text="${prov.telefono}"></span></p>
+                <p><strong>Email:</strong> <span th:text="${prov.email}"></span></p>
+                <p><strong>Dirección:</strong> <span th:text="${prov.direccion}"></span></p>
+                <p><strong>Fecha de Registro:</strong> <span th:text="${prov.fecha_registro}"></span></p>
+                <div class="card-actions">
+                    <a th:href="@{'/proveedor/editar/' + ${prov.id_proveedor}}">Editar</a>
+                    <a th:href="@{'/proveedor/eliminar/' + ${prov.id_proveedor}}"
+                       onclick="return confirm('¿Estás seguro de que quieres eliminar este proveedor?');">Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

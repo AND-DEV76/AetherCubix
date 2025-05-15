@@ -1,0 +1,146 @@
+/* Animación para aparición */
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animación al hacer hover en botones */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.03);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #121212;
+    color: #ffffff;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #a5b4fc;
+    animation: fadeSlideUp 0.6s ease forwards;
+}
+
+a {
+    margin-right: 10px;
+    color: #a5b4fc;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #c4b5fd;
+    text-decoration: underline;
+    animation: pulse 0.4s ease;
+}
+
+.producto-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    width: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #1f1f2e;
+    box-shadow: 0 0 15px rgba(165, 180, 252, 0.15);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    animation: fadeSlideUp 0.6s ease both;
+}
+
+.card .imagen img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card .imagen span {
+    display: block;
+    text-align: center;
+    padding: 20px;
+    color: #a5b4fc;
+}
+
+.card .info {
+    padding: 15px;
+}
+
+.card .info h3 {
+    margin: 0 0 10px;
+    color: #c4b5fd;
+    text-align: center;
+}
+
+.card .info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #e0e0ff;
+}
+
+.card .acciones {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.card .acciones a,
+.card form button,
+.boton {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background-color: #1f1f2e;
+    color: #a5b4fc;
+    border: 1px solid #a5b4fc;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    cursor: pointer;
+    animation: fadeSlideUp 0.6s ease both;
+}
+
+.card .acciones a:hover,
+.card form button:hover,
+.boton:hover {
+    background-color: #3f3f7e;
+    color: white;
+    border-color: #c4b5fd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(165, 180, 252, 0.2);
+}
+
+input[type="file"] {
+    color: white;
+    margin-top: 10px;
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(165, 180, 252, 0.25);
+}

@@ -3,51 +3,38 @@
 <head>
     <title>Ventas</title>
     <meta charset="UTF-8">
-    <style>
-        table, th, td { border: 1px solid black; border-collapse: collapse; padding: 8px; }
-    </style>
+    <link rel="stylesheet" href="/css/sales.css">
 </head>
-
-<a th:href="@{/}" >Volver al Inicio</a>
 <body>
-    <h1>Lista de Ventas</h1>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>Cliente</th>
-                <th>NIT</th>
-                <th>Total</th>
-                <th>Método de Pago</th>
-                <th>Estado</th>
-                <th>Productos Comprados</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="venta : ${ventas}">
-                <td th:text="${venta.nombre_cliente}"></td>
-                <td th:text="${venta.nit_cliente}"></td>
-                <td th:text="${venta.total}"></td>
-                <td th:text="${venta.metodo_pago}"></td>
-                <td th:text="${venta.estado}"></td>
-                <td>
+    <div class="contenedor-principal">
+        <a class="volver" th:href="@{/}">X</a>
+        <h1>Lista de Ventas</h1>
+
+        <div class="grid-ventas">
+            <div class="card-venta" th:each="venta : ${ventas}">
+                <h2 th:text="${venta.nombre_cliente}"></h2>
+                <p><strong>NIT:</strong> <span th:text="${venta.nit_cliente}"></span></p>
+                <p><strong>Total:</strong> Q<span th:text="${venta.total}"></span></p>
+                <p><strong>Método de Pago:</strong> <span th:text="${venta.metodo_pago}"></span></p>
+                <p><strong>Estado:</strong> <span th:text="${venta.estado}"></span></p>
+
+                <div class="productos">
+                    <p><strong>Productos Comprados:</strong></p>
                     <ul>
                         <li th:each="detalle : ${venta.detalles}">
-                            <span th:text="${detalle.producto.nombre}"></span> -
-                            <span th:text="${detalle.cantidad}"></span> unidades -
-                            <span th:text="${detalle.precio_unitario}"></span> c/u
+                            <span th:text="${detalle.producto.nombre}"></span> - 
+                            <span th:text="${detalle.cantidad}"></span> unid. - 
+                            Q<span th:text="${detalle.precio_unitario}"></span>
                         </li>
                     </ul>
-                </td>
-                <td>
-    <form th:action="@{/ventas/eliminar/{id}(id=${venta.id_venta})}" method="get">
-        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar esta venta?');">Eliminar</button>
-    </form>
-</td>
+                </div>
 
-            </tr>
-        </tbody>
-    </table>
-
+                <form th:action="@{/ventas/eliminar/{id}(id=${venta.id_venta})}" method="get">
+                    <button class="btn-eliminar" type="submit"
+                        onclick="return confirm('¿Estás seguro de eliminar esta venta?');">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

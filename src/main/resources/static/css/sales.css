@@ -1,0 +1,103 @@
+/* General */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #121212;
+    color: #e0e0ff;
+    padding: 30px 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.contenedor-principal {
+    max-width: 1200px;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    color: #a5b4fc;
+    margin-bottom: 30px;
+}
+
+/* Enlace volver */
+.volver {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #a5b4fc;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.volver:hover {
+    color: #c4b5fd;
+}
+
+/* Grid de tarjetas */
+.grid-ventas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* Tarjeta individual */
+.card-venta {
+    background-color: #1f1f2e;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(165, 180, 252, 0.1);
+    transition: transform 0.2s;
+}
+
+.card-venta:hover {
+    transform: translateY(-4px);
+}
+
+.card-venta h2 {
+    margin-top: 0;
+    color: #a5b4fc;
+    font-size: 20px;
+}
+
+/* Productos */
+.card-venta .productos ul {
+    padding-left: 18px;
+    margin: 8px 0;
+}
+
+.card-venta .productos li {
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+    background-color: #7c3aed;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-eliminar:hover {
+    background-color: #a78bfa;
+}
+
+/* Responsive ajustes */
+@media (max-width: 500px) {
+    .card-venta {
+        padding: 15px;
+    }
+
+    .card-venta h2 {
+        font-size: 18px;
+    }
+
+    .btn-eliminar {
+        width: 100%;
+    }
+}

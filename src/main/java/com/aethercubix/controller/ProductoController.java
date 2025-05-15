@@ -34,12 +34,19 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
-    @GetMapping
-    public String listarProductos(Model model) {
-        List<Producto> productos = productoRepository.findAll();
-        model.addAttribute("productos", productos);
-        return "producto";
+   @GetMapping
+public String listarProductos(Model model) {
+    List<Producto> productos = productoRepository.findAll();
+
+    // Cargar explícitamente las imágenes si es necesario (si da error por lazy loading)
+    for (Producto producto : productos) {
+        producto.getImagenes().size(); // fuerza la carga
     }
+
+    model.addAttribute("productos", productos);
+    return "producto";
+}
+
 
     @GetMapping("/nuevo")
     public String mostrarFormularioNuevoProducto(Model model) {

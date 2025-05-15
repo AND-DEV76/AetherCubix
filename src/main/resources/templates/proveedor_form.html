@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Registrar Proveedor</title>
+    <link rel="stylesheet" href="/css/proveedorform.css">
 </head>
 <body>
     <h1>Registrar Nuevo Proveedor</h1>
@@ -18,7 +19,7 @@
         <input type="text" th:field="*{contacto}"><br>
 
         <label>Teléfono:</label>
-        <input type="text" th:field="*{telefono}" required><br>
+        <input type="tel" th:field="*{telefono}" required><br>
 
         <label>Email:</label>
         <input type="email" th:field="*{email}" required><br>
@@ -26,10 +27,18 @@
         <label>Dirección:</label>
         <textarea th:field="*{direccion}"></textarea><br>
 
-        <button type="submit">Guardar</button>
+      
+
+
+         <div class="form-buttons">
+             <button type="submit">Guardar</button>
+
+        <a th:href="@{/proveedores}" class="cancel-button">Cancelar</a>
+        
+    </div>
     </form>
 
     <br>
-    <a th:href="@{/proveedores}">Volver a la lista</a>
+    
 </body>
 </html>

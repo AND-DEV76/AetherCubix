@@ -1,0 +1,194 @@
+/* Fondo general */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 40px;
+}
+
+/* Contenedor principal de la factura */
+.factura-container {
+    background-color: rgba(31, 31, 46, 0.95);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(165, 180, 252, 0.2);
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
+}
+
+/* Título */
+h1 {
+    text-align: center;
+    color: #a5b4fc;
+    margin-bottom: 20px;
+}
+
+/* Enlace de regreso */
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #a5b4fc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #c4b5fd;
+}
+
+/* Formulario */
+.factura-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Campos de cliente */
+.cliente-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.cliente-info input {
+    flex: 1 1 48%;
+}
+
+/* Selecciones */
+.metodo-estado {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.metodo-estado select {
+    flex: 1 1 48%;
+}
+
+/* Productos */
+.productos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: rgba(18, 18, 18, 0.5);
+    padding: 15px;
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.producto-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1f1f2e;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.producto-item label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #e0e0ff;
+    flex: 1;
+}
+
+.producto-item input[type="number"] {
+    width: 60px;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #3f3f7e;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Botón */
+button[type="submit"] {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: #1f1f2e;
+    color: #a5b4fc;
+    border: 1px solid #a5b4fc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #3f3f7e;
+    color: #ffffff;
+}
+
+/* Inputs y selects */
+input[type="text"],
+input[type="number"],
+select {
+    padding: 10px;
+    border: 1px solid #3f3f7e;
+    border-radius: 8px;
+    background-color: #121212;
+    color: #ffffff;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .cliente-info input,
+    .metodo-estado select {
+        flex: 1 1 100%;
+    }
+
+    .producto-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .producto-item input[type="number"] {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+
+/* Agrupador de cada input con su label */
+.input-group {
+    flex: 1 1 48%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Etiquetas */
+label {
+    color: #c4b5fd;
+    font-weight: bold;
+}
+
+/* Inputs, textarea y select */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    padding: 10px;
+    border: 1px solid #3f3f7e;
+    border-radius: 8px;
+    background-color: #121212;
+    color: #e0e0ff;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}

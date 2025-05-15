@@ -1,33 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>EFactura</title>
+    <title>Factura</title>
+    <link rel="stylesheet" href="/css/factura.css">
 </head>
+<body>
 
-<a th:href="@{/}" >Volver al Inicio</a>
-<form th:action="@{/factura}" method="post">
-    <input name="nombre_cliente" placeholder="Nombre cliente" required>
-    <input name="nit_cliente" placeholder="NIT" required>
+    <div class="factura-container">
+        <a class="back-link" th:href="@{/}">X</a>
 
-    <select name="metodo_pago">
-        <option value="efectivo">Efectivo</option>
-        <option value="tarjeta">Tarjeta</option>
-    </select>
+        <h1>Factura de Venta</h1>
 
-    <select name="estado">
-        <option value="pendiente">Pendiente</option>
-        <option value="cancelado">Cancelado</option>
-    </select>
+        <form th:action="@{/factura}" method="post" class="factura-form">
 
-    <div id="productos">
-        <div th:each="p : ${productos}">
-            <input type="checkbox" name="productoIds" th:value="${p.id_producto}"/>
-            <span th:text="${p.nombre} + ' - ' + ${p.precio}"></span>
-            <input type="number" name="cantidades" min="1" value="1"/>
-        </div>
+    <div class="cliente-info">
+    <div class="input-group">
+        <label for="nombre_cliente">Nombre del Cliente</label>
+        <input type="text" id="nombre_cliente" name="nombre_cliente"  required>
     </div>
 
-    <button type="submit">Guardar Venta</button>
-</form>
+    <div class="input-group">
+        <label for="nit_cliente">NIT</label>
+        <input type="text" id="nit_cliente" name="nit_cliente"  required>
+    </div>
+</div>
 
+
+            <div class="metodo-estado">
+                <select name="metodo_pago">
+                    <option value="efectivo">Efectivo</option>
+                    <option value="tarjeta">Tarjeta</option>
+                </select>
+
+                <select name="estado">
+                    <option value="pendiente">Pendiente</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+            </div>
+
+            <div id="productos" class="productos-lista">
+                <div class="producto-item" th:each="p : ${productos}">
+                    <label>
+                        <input type="checkbox" name="productoIds" th:value="${p.id_producto}" />
+                        <span th:text="${p.nombre} + ' - Q' + ${p.precio}"></span>
+                    </label>
+                    <input type="number" name="cantidades" min="1" value="1" />
+                </div>
+            </div>
+
+            <button type="submit">Guardar Venta</button>
+        </form>
+    </div>
+
+</body>
 </html>

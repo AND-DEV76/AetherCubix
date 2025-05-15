@@ -2,46 +2,54 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Lista de Productos</title>
+    <link rel="stylesheet" href="/css/producto.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <h1>Lista de Productos</h1>
-    <a th:href="@{/productos/nuevo}">Crear Nuevo Producto</a>
-    <a th:href="@{/}" >Volver al Inicio</a>
+    <header>
+        <h1>Lista de Productos</h1>
+        
+    </header>
 
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Marca</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th>Proveedor</th>
-            <th>Descripción</th>
-            <th>Actiones</th> <!-- NUEVA COLUMNA -->
-        </tr>
-        <tr th:each="producto : ${productos}">
-            <td th:text="${producto.id_producto}"></td>
-            <td th:text="${producto.nombre}"></td>
-            <td th:text="${producto.marca}"></td>
-            <td th:text="${producto.precio}"></td>
-            <td th:text="${producto.stock}"></td>
-            <td th:text="${producto.proveedor.nombre}"></td>
-            <td th:text="${producto.descripcion}"></td>
+    <div class="acciones-globales">
+    <a class="boton" th:href="@{/productos/nuevo}">Crear Nuevo Producto</a>
+    <a class="boton" th:href="@{/}">Volver al Inicio</a>
+</div>
+<br>
 
-            <!-- FORMULARIO PARA SUBIR IMAGEN -->
-            <td>
-               <form th:action="@{/imagenes/producto/{id}/subir(id=${producto.id_producto})}"
-              method="post" enctype="multipart/form-data">
-            <input type="file" name="archivo" accept=".png,.jpg,.jpeg" required />
-            <button type="submit">Subir Imagen</button>
-        </form>
-         <a th:href="@{/productos/editar/{id}(id=${producto.id_producto})}">Editar</a>
-            <a th:href="@{/productos/eliminar/{id}(id=${producto.id_producto})}"
-                   onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
-                   Eliminar
-                </a>
-            </td>
-        </tr>
-    </table>
+    <main>
+        <div class="producto-container">
+            <div class="card" th:each="producto : ${productos}">
+                <div class="imagen">
+                    <img th:if="${producto.imagenes != null and !producto.imagenes.isEmpty()}"
+                         th:src="@{'/img/' + ${producto.imagenes[0].nombreImagen}}" alt="Imagen del producto" />
+                    <span th:if="${producto.imagenes == null or producto.imagenes.isEmpty()}">Sin imagen</span>
+                </div>
+
+                <div class="info">
+                    <h3 th:text="${producto.nombre}"></h3>
+                    <p><strong>Marca:</strong> <span th:text="${producto.marca}"></span></p>
+                    <p><strong>Precio:</strong> Q<span th:text="${producto.precio}"></span></p>
+                    <p><strong>Stock:</strong> <span th:text="${producto.stock}"></span></p>
+                    <p><strong>Proveedor:</strong> <span th:text="${producto.proveedor.nombre}"></span></p>
+                    <p><strong>Descripción:</strong> <span th:text="${producto.descripcion}"></span></p>
+
+                    <div th:if="${producto.imagenes == null or producto.imagenes.isEmpty()}">
+                        <form th:action="@{/imagenes/producto/{id}/subir(id=${producto.id_producto})}"
+                              method="post" enctype="multipart/form-data">
+                            <input type="file" name="archivo" accept=".png,.jpg,.jpeg" required />
+                            <button class="boton" type="submit">Subir Imagen</button>
+                        </form>
+                    </div>
+
+                    <div class="acciones">
+                        <a class="boton" th:href="@{/productos/editar/{id}(id=${producto.id_producto})}">Editar</a>
+                        <a class="boton eliminar" th:href="@{/productos/eliminar/{id}(id=${producto.id_producto})}"
+                           onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
