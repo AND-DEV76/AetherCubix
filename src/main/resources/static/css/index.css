@@ -1,0 +1,145 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 100vh;
+    font-family: sans-serif;
+}
+
+.menu {
+    width: 220px;
+    background-color: #1e1e2f;
+    padding: 20px;
+    border-right: 2px solid #333;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.menu h2 {
+    color: #fff;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+}
+
+.menu a {
+    display: block;
+    margin-bottom: 15px;
+    color: #a5b4fc;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.menu a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 5px #7c3aed;
+}
+
+.dashboard {
+    overflow-y: auto;
+    flex: 1;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    background-color: #121212;
+}
+
+.dashboard::-webkit-scrollbar {
+    width: 10px;
+}
+
+.dashboard::-webkit-scrollbar-track {
+    background: #1f1f1f;
+}
+
+.dashboard::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 5px;
+}
+
+.dashboard::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+.chart-container {
+    background-color: #1f1f2e;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.chart-container:hover {
+    transform: translateY(-5px);
+}
+
+.chart-container h2 {
+    color: #fff;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
+}
+
+.wide {
+    grid-column: span 2;
+}
+
+.chart-stock,
+.chart-precio,
+.chart-top {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 350px;
+}
+
+/* 📱 Media Query para pantallas menores a 768px */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
+    .menu {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #333;
+    }
+
+    .dashboard {
+        padding: 20px;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .wide {
+        grid-column: span 1;
+    }
+
+    .chart-stock,
+    .chart-precio,
+    .chart-top {
+        height: auto !important;
+        max-height: 250px;
+    }
+
+
+/* Estilos base: menú visible, botón oculto */
+.menu {
+    display: block;
+    width: 220px;
+    background-color: #1e1e2f;
+    padding: 20px;
+    border-right: 2px solid #333;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+
+
+}

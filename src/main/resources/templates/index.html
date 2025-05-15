@@ -1,26 +1,170 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Inicio</title>
     <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="/css/index.css">
+
 </head>
 <body>
-    <h1>Bienvenido al Sistema</h1>
-    <a th:href="@{/proveedores}">
-        <button>Ver Proveedores</button>
-    </a>
+  
+<button class="hamburger">☰</button>
 
-   
-
-     <a th:href="@{/productos}">Ir a Productos</a>
-
-
-     <a th:href="@{/factura}" class="btn btn-primary">Factura</a>
-
-
-     <a th:href="@{/ventas}">Ver Ventas</a>
+<div class="menu" id="sidebarMenu">
+    <h2>AetherCubix</h2>
+    <a th:href="@{/proveedores}">📦 Proveedores</a>
+    <a th:href="@{/productos}">🧩 Productos</a>
+    <a th:href="@{/factura}">🧾 Factura</a>
+    <a th:href="@{/ventas}">💰 Ventas</a>
+</div>
 
 
+
+    <div class="dashboard">
+        <div class="chart-container">
+            <h2>Stock de Productos</h2>
+            <canvas id="stockChart" class="chart-stock"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>Precios por Producto</h2>
+            <canvas id="precioChart" class="chart-precio"></canvas>
+        </div>
+        <div class="chart-container wide">
+            <h2>Top 5 Productos Vendidos</h2>
+            <canvas id="topVentasChart" class="chart-top"></canvas>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+
+        // Precio (columnas verticales)
+        const nombresPrecio = /*[[${nombresPrecio}]]*/ [];
+        const precios = /*[[${precios}]]*/ [];
+
+        new Chart(document.getElementById('precioChart'), {
+            type: 'bar',
+            data: {
+                labels: nombresPrecio,
+                datasets: [{
+                    label: 'Precio',
+                    data: precios,
+                    backgroundColor: ['#7c3aed', '#3b82f6', '#22d3ee', '#8b5cf6', '#a78bfa']
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: 'white'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: 'white'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Stock
+        const stockNombres = /*[[${stockNombres}]]*/ [];
+        const stockCantidades = /*[[${stockCantidades}]]*/ [];
+
+        new Chart(document.getElementById('stockChart'), {
+            type: 'line',
+            data: {
+                labels: stockNombres,
+                datasets: [{
+                    label: 'Stock',
+                    data: stockCantidades,
+                    fill: false,
+                    borderColor: '#38bdf8',
+                    tension: 0.3
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: 'white' }
+                    },
+                    x: {
+                        ticks: { color: 'white' }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: { color: 'white' }
+                    }
+                }
+            }
+        });
+// Top 5 Vendidos - BARRAS HORIZONTALES
+const nombres = /*[[${nombres}]]*/ [];
+const cantidades = /*[[${cantidades}]]*/ [];
+
+new Chart(document.getElementById('topVentasChart'), {
+    type: 'bar',
+    data: {
+        labels: nombres,
+        datasets: [{
+            label: 'Cantidad Vendida',
+            data: cantidades,
+            backgroundColor: '#4f46e5'
+        }]
+    },
+    options: {
+        indexAxis: 'y',  // 👈 esto hace las barras horizontales
+        scales: {
+            x: { // horizontal ahora es el valor (cantidad)
+                beginAtZero: true,
+                ticks: { color: 'white' }
+            },
+            y: {
+                ticks: { color: 'white' }
+            }
+        },
+        plugins: {
+            legend: {
+                labels: { color: 'white' }
+            }
+        }
+    }
+});
+document.addEventListener('DOMContentLoaded', () => {
+    // Función para mostrar u ocultar el menú
+    function toggleMenu() {
+        const menu = document.getElementById('sidebarMenu');
+        menu.classList.toggle('show');
+    }
+
+    // Asignar toggleMenu al botón hamburguesa
+    const hamburgerBtn = document.querySelector('.hamburger');
+    if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', toggleMenu);
+    }
+
+    // Ocultar menú al hacer clic en un enlace (solo en móvil)
+    document.querySelectorAll('#sidebarMenu a').forEach(link => {   
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                const menu = document.getElementById('sidebarMenu');
+                menu.classList.remove('show');
+            }
+        });
+    });
+});
+    </script>
 </body>
 </html>
