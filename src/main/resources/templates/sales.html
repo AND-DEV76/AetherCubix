@@ -10,6 +10,16 @@
         <a class="volver" th:href="@{/}">X</a>
         <h1>Lista de Ventas</h1>
 
+<div class="acciones-globales">
+    <form th:action="@{/ventas}" method="get" class="form-busqueda">
+        <input type="text" name="filtro" placeholder="Buscar ventas por campos..." 
+               th:value="${param.filtro}">
+        <button type="submit">Buscar</button>
+    </form>
+</div>
+
+<br>
+
         <div class="grid-ventas">
             <div class="card-venta" th:each="venta : ${ventas}">
                 <h2 th:text="${venta.nombre_cliente}"></h2>

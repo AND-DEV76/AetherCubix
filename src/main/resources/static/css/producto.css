@@ -144,3 +144,41 @@ input[type="file"] {
     transform: translateY(-10px);
     box-shadow: 0 12px 24px rgba(165, 180, 252, 0.25);
 }
+
+
+.acciones-globales {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-busqueda {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.form-busqueda input[type="text"] {
+    width: 600px;
+    padding: 8px 12px;
+    border: 1px solid #a5b4fc;
+    border-radius: 8px;
+    background-color: #1f1f2e;
+    color: #a5b4fc;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+    animation: fadeSlideUp 0.6s ease both;
+}
+
+.form-busqueda input[type="text"]::placeholder {
+    color: #a5b4fc;
+    opacity: 0.6;
+}
+
+.form-busqueda input[type="text"]:focus {
+    border-color: #c4b5fd;
+    box-shadow: 0 0 0 2px rgba(165, 180, 252, 0.2);
+}

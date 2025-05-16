@@ -69,5 +69,8 @@ public void eliminarVenta(Long id) {
 }
 
 
+public List<Venta> buscarVentasPorFiltro(String filtro) {
+    return ventaRepository.buscarPorCampos(filtro.toLowerCase());
+}
 
 }

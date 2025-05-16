@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aethercubix.model.Producto;
 
@@ -34,13 +34,18 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
-   @GetMapping
-public String listarProductos(Model model) {
-    List<Producto> productos = productoRepository.findAll();
+@GetMapping
+public String listarProductos(@RequestParam(value = "buscar", required = false) String buscar, Model model) {
+    List<Producto> productos;
 
-    // Cargar explícitamente las imágenes si es necesario (si da error por lazy loading)
+    if (buscar != null && !buscar.isBlank()) {
+        productos = productoRepository.buscarProductos(buscar);
+    } else {
+        productos = productoRepository.findAll();
+    }
+
     for (Producto producto : productos) {
-        producto.getImagenes().size(); // fuerza la carga
+        producto.getImagenes().size(); // cargar imágenes
     }
 
     model.addAttribute("productos", productos);
@@ -87,7 +92,6 @@ public String eliminarProducto(@PathVariable("id") Long id) {
     productoService.eliminarProductoConImagen(id);
     return "redirect:/productos";
 }
-
 
 
 

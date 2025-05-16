@@ -61,11 +61,19 @@ public String procesarFactura(
 
 
 @GetMapping("/ventas")
-public String verVentas(Model model) {
-    List<Venta> ventas = facturaService.obtenerTodasLasVentas();
+public String verVentas(@RequestParam(value = "filtro", required = false) String filtro, Model model) {
+    List<Venta> ventas;
+
+    if (filtro != null && !filtro.isEmpty()) {
+        ventas = facturaService.buscarVentasPorFiltro(filtro);
+    } else {
+        ventas = facturaService.obtenerTodasLasVentas();
+    }
+
     model.addAttribute("ventas", ventas);
     return "sales";
 }
+
 
 
 @GetMapping("/ventas/eliminar/{id}")

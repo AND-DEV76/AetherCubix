@@ -9,13 +9,20 @@
     <header>
         <h1>Lista de Productos</h1>
         
-    </header>
-
-    <div class="acciones-globales">
+<div class="acciones-globales">
     <a class="boton" th:href="@{/productos/nuevo}">Crear Nuevo Producto</a>
     <a class="boton" th:href="@{/}">Volver al Inicio</a>
+
+    <form method="get" action="/productos" class="form-busqueda">
+        <input type="text" name="buscar" placeholder="Buscar productos por campos..." />
+        <button type="submit" class="boton">Buscar</button>
+    </form>
 </div>
+
+
+
 <br>
+
 
     <main>
         <div class="producto-container">
@@ -53,3 +60,4 @@
     </main>
 </body>
 </html>
+
