@@ -21,8 +21,10 @@ public class Producto {
     @Column(nullable = false, length = 50)
     private String nombre;
 
-    @Column(nullable = false, length = 50)
-    private String marca;
+  @ManyToOne
+@JoinColumn(name = "id_marca", nullable = false)
+private Marca marca;
+
 
     @Column(nullable = false)
     private Double precio;

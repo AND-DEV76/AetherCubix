@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aethercubix.model.Producto;
-
+import com.aethercubix.repository.MarcaRepository;
 import com.aethercubix.repository.ProductoRepository;
 import com.aethercubix.repository.ProveedorRepository;
 import com.aethercubix.service.ProductoService;
@@ -33,6 +33,10 @@ public class ProductoController {
 
     @Autowired
     private ProductoService productoService;
+
+    @Autowired
+private MarcaRepository marcaRepository;
+
 
 @GetMapping
 public String listarProductos(@RequestParam(value = "buscar", required = false) String buscar, Model model) {
@@ -57,6 +61,8 @@ public String listarProductos(@RequestParam(value = "buscar", required = false) 
     public String mostrarFormularioNuevoProducto(Model model) {
         model.addAttribute("producto", new Producto());
         model.addAttribute("proveedores", proveedorRepository.findAll());
+        model.addAttribute("marcas", marcaRepository.findAll());//despues de la normalizacion
+
         return "nuevoproducto";
     }
 
@@ -75,6 +81,8 @@ public String mostrarFormularioEditarProducto(@PathVariable("id") Integer id, Mo
                             .orElseThrow(() -> new IllegalArgumentException("ID de producto inválido: " + id));
     model.addAttribute("producto", producto);
     model.addAttribute("proveedores", proveedorRepository.findAll()); // si necesitas lista de proveedores
+    model.addAttribute("marcas", marcaRepository.findAll());//despues de la normalizacion
+
     return "editarproducto"; // vista que vas a crear
 }
 

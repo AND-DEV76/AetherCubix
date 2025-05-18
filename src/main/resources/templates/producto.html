@@ -35,7 +35,7 @@
 
                 <div class="info">
                     <h3 th:text="${producto.nombre}"></h3>
-                    <p><strong>Marca:</strong> <span th:text="${producto.marca}"></span></p>
+                    <p><strong>Marca:</strong> <span th:text="${producto.marca.nombre}"></span></p><!--cambios despues de la normalizacion--> 
                     <p><strong>Precio:</strong> Q<span th:text="${producto.precio}"></span></p>
                     <p><strong>Stock:</strong> <span th:text="${producto.stock}"></span></p>
                     <p><strong>Proveedor:</strong> <span th:text="${producto.proveedor.nombre}"></span></p>

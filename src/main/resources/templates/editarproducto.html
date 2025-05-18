@@ -15,7 +15,14 @@
         <input type="text" th:field="*{nombre}" required /><br>
 
         <label>Marca:</label>
-        <input type="text" th:field="*{marca}" required /><br>
+<select th:field="*{marca.id}" required>
+    <option th:each="marca : ${marcas}"
+            th:value="${marca.id}"
+            th:text="${marca.nombre}"
+            th:selected="${marca.id == producto.marca.id}">
+    </option>
+</select><br>
+        <!-- Cambios para la normalizacion de la base de datos -->
 
         <label>Precio:</label>
         <input type="number" step="0.01" th:field="*{precio}" required /><br>
