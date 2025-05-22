@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.aethercubix.model.MetodoPago;
 import com.aethercubix.model.Venta;
 
 
@@ -37,5 +38,8 @@ List<Venta> findByFiltro(@Param("filtro") String filtro);
     @Query("SELECT COUNT(v) > 0 FROM Venta v WHERE v.cliente.id_cliente = :idCliente")
     boolean existsVentaByClienteId(@Param("idCliente") Long idCliente);
 
+
+
+     boolean existsByMetodoPago(MetodoPago metodoPago);
     
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuevo Método de Pago</title>
+    <link rel="stylesheet" href="/css/nuevoproducto.css">
+</head>
+<body>
+
+<h1>Registrar Nuevo Método de Pago</h1>
+
+<div th:if="${error}">
+    <p style="color: red; text-align:center;" th:text="${error}"></p>
+</div>
+<br>
+<form th:action="@{/pago/guardar}" th:object="${metodoPago}" method="post">
+    <label>Nombre:</label>
+    <input type="text" th:field="*{nombre}" required maxlength="20"><br>
+
+    <div class="form-buttons">
+        <button type="submit">Guardar</button>
+        <a th:href="@{/pago}">Cancelar</a>
+    </div>
+</form>
+
+</body>
+</html>

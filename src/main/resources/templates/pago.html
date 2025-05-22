@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Métodos de Pago</title>
+    <link rel="stylesheet" href="/css/producto.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+    <h1>Métodos de Pago</h1>
+
+    <div class="acciones-globales">
+        <a class="boton" th:href="@{/pago/nuevo}">➕ Nuevo Método de Pago</a>
+        <a class="boton" th:href="@{/}">🏠 Volver al Inicio</a>
+    </div>
+</header>
+<br>
+<main>
+    <div th:if="${error}">
+        <p style="color: red; text-align:center;" th:text="${error}"></p>
+    </div>
+
+    <div class="producto-container">
+        <div class="card" th:each="metodo : ${metodos}">
+            <div class="info">
+                <h3 th:text="${metodo.nombre}">Nombre del Método</h3>
+                <p><strong>ID:</strong> <span th:text="${metodo.id_metodo}">1</span></p>
+
+                <div class="acciones">
+                    <a class="boton eliminar"
+                       th:href="@{'/pago/eliminar/' + ${metodo.id_metodo}}"
+                       onclick="return confirm('¿Estás seguro que quieres eliminar este método de pago?')">
+                        🗑 Eliminar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
