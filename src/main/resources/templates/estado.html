@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Estados de Venta</title>
+    <link rel="stylesheet" href="/css/producto.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+    <h1>📌 Estados de Venta</h1>
+
+    <div class="acciones-globales">
+        <a class="boton" th:href="@{/estado/nuevo}">➕ Nuevo Estado Venta</a>
+        <a class="boton" th:href="@{/}">🏠 Volver al Inicio</a>
+    </div>
+</header>
+
+<br>
+
+<main>
+    <div th:if="${error}">
+        <p style="color: red; text-align:center;" th:text="${error}"></p>
+    </div>
+
+    <div class="producto-container">
+        <div class="card" th:each="estado : ${estados}">
+            <div class="info">
+                <h3 th:text="${estado.nombre}">Nombre del Estado</h3>
+                <p><strong>ID:</strong> <span th:text="${estado.id_estado}">1</span></p>
+
+                <div class="acciones">
+                    <a class="boton eliminar"
+                       th:href="@{'/estado/eliminar/' + ${estado.id_estado}}"
+                       onclick="return confirm('¿Estás seguro que quieres eliminar este estado?')">
+                        🗑 Eliminar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

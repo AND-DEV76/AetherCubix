@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.aethercubix.model.EstadoVenta;
 import com.aethercubix.model.MetodoPago;
 import com.aethercubix.model.Venta;
 
@@ -41,5 +42,8 @@ List<Venta> findByFiltro(@Param("filtro") String filtro);
 
 
      boolean existsByMetodoPago(MetodoPago metodoPago);
+
+
+     boolean existsByEstadoVenta(EstadoVenta estadoVenta);
     
 }

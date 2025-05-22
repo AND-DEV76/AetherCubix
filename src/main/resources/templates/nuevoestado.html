@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuevo Estado Venta</title>
+    <link rel="stylesheet" href="/css/nuevoproducto.css">
+</head>
+<body>
+
+    <h1>➕ Crear Nuevo Estado de Venta</h1>
+
+    <div th:if="${error}">
+        <p style="color:red; text-align:center;" th:text="${error}"></p>
+    </div>
+
+    <form th:action="@{/estado/guardar}" th:object="${estadoVenta}" method="post">
+        <label>Nombre:</label>
+        <input type="text" th:field="*{nombre}" required minlength="3" maxlength="20"><br>
+
+        <div class="form-buttons">
+            <button type="submit">Guardar</button>
+            <a th:href="@{/estado}">Cancelar</a>
+        </div>
+    </form>
+
+</body>
+</html>
