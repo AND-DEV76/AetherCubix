@@ -33,6 +33,9 @@ public interface VentaRepository extends JpaRepository<Venta, Long> {
 List<Venta> findByFiltro(@Param("filtro") String filtro);
 
 
+//mantenemos la realcion con el cliente y la venta
+    @Query("SELECT COUNT(v) > 0 FROM Venta v WHERE v.cliente.id_cliente = :idCliente")
+    boolean existsVentaByClienteId(@Param("idCliente") Long idCliente);
 
     
 }

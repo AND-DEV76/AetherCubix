@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Clientes</title>
+    <link rel="stylesheet" th:href="@{/css/producto.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<header>
+    <h1>Lista de Clientes</h1>
+
+    <div class="acciones-globales">
+        <a class="boton" th:href="@{/Clientes/nuevo}">➕ Nuevo Cliente</a>
+        <a class="boton" th:href="@{/}">🏠 Volver al Inicio</a>
+
+        <!-- Opcional: barra de búsqueda -->
+        <!--
+        <form method="get" action="/Clientes" class="form-busqueda">
+            <input type="text" name="buscar" placeholder="Buscar clientes por nombre o NIT..." />
+            <button type="submit" class="boton">Buscar</button>
+        </form>
+        -->
+    </div>
+</header>
+
+<main>
+    <div th:if="${errorEliminar}" class="mensaje-error">
+        <p th:text="${errorEliminar}"></p>
+    </div>
+
+    <div class="producto-container">
+        <div class="card" th:each="cliente : ${clientes}">
+            <div class="info">
+                <h3>ID: <span th:text="${cliente.id_cliente}"></span></h3>
+                <p><strong>Nombre:</strong> <span th:text="${cliente.nombre}"></span></p>
+                <p><strong>NIT:</strong> <span th:text="${cliente.nit}"></span></p>
+
+                <div class="acciones">
+                    <a class="boton" th:href="@{'/Clientes/editar/' + ${cliente.id_cliente}}">✏️ Editar</a>
+                    <a class="boton eliminar" th:href="@{'/Clientes/eliminar/' + ${cliente.id_cliente}}"
+                       onclick="return confirm('¿Estás seguro de eliminar este cliente?');">🗑️ Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
