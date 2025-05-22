@@ -1,6 +1,8 @@
 package com.aethercubix.model;
 
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,5 +21,10 @@ public class Marca {
 
     @Column(nullable = false, unique = true, length = 50)
     private String nombre;
+
+
+    @OneToMany(mappedBy = "marca")
+private List<Producto> productos;
+
     
 }

@@ -9,4 +9,6 @@ public interface MarcaRepository  extends JpaRepository<Marca, Long> {
     // Por ejemplo, para buscar marcas por nombre, etc.
     
     Marca findByNombre(String nombre);
+
+     boolean existsByNombre(String nombre);
 }

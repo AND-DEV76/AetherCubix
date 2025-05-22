@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nueva Marca</title>
+    <link rel="stylesheet" href="/css/nuevoproducto.css">
+</head>
+<body>
+
+    <h1>Crear Nueva Marca</h1>
+
+    <div th:if="${advertencia}">
+        <p style="color:orange; text-align:center;" th:text="${advertencia}"></p>
+    </div>
+
+    <form th:action="@{/guardarmarca}" th:object="${marca}" method="post">
+        <label>Nombre:</label>
+        <input type="text" th:field="*{nombre}" required><br>
+
+        <div class="form-buttons">
+            <button type="submit">Guardar</button>
+            <a th:href="@{/marcar}">Cancelar</a>
+        </div>
+    </form>
+
+</body>
+</html>

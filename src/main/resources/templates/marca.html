@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Marcas</title>
+    <link rel="stylesheet" href="/css/producto.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+    <h1>Lista de Marcas</h1>
+
+    <div class="acciones-globales">
+        <a class="boton" th:href="@{/nuevamarca}">Crear Nueva Marca</a>
+        <a class="boton" th:href="@{/}">Volver al Inicio</a>
+
+     
+    </div>
+</header>
+
+<main>
+    <div th:if="${advertencia}">
+        <p style="color:orange; text-align:center;" th:text="${advertencia}"></p>
+    </div>
+
+    <div class="producto-container">
+        <div class="card" th:each="marca : ${marcas}">
+            <div class="info">
+                <h3 th:text="${marca.nombre}">Nombre de la marca</h3>
+                <p><strong>ID:</strong> <span th:text="${marca.id}"></span></p>
+
+                <div class="acciones">
+                    <a class="boton eliminar" 
+                       th:href="@{'/eliminarmarca/' + ${marca.id}}"
+                       onclick="return confirm('¿Estás seguro que quieres eliminar esta marca?')">
+                        Eliminar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
