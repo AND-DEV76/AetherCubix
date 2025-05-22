@@ -13,31 +13,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class DetalleVenta {
-
-
-    @Id
+ @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_detalle")
     private Long id_detalle;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_venta")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_venta", nullable = false)
     private Venta venta;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_producto")
+    @JoinColumn(name = "id_producto", nullable = false)
     private Producto producto;
 
-    private Integer cantidad;
+    @Column(name = "cantidad")
+    private int cantidad;
 
+    @Column(name = "precio_unitario")
     private Double precio_unitario;
 
+    @Column(name = "subtotal")
     private Double subtotal;
-
-    @PrePersist
-    @PreUpdate
-    public void calcularSubtotal() {
-        this.precio_unitario = producto.getPrecio();
-        this.subtotal = this.precio_unitario * this.cantidad;
-    }
     
 }

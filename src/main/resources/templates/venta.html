@@ -1,36 +1,38 @@
+<!-- venta.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Venta</title>
-    <link rel="stylesheet" href="/css/venta.css">
+    <title>Resumen de Factura</title>
+    <link rel="stylesheet" href="/css/factura.css">
 </head>
 <body>
     <div class="factura-container">
-        <a class="volver" th:href="@{/}">X</a>
+        <a class="back-link" th:href="@{/}">X</a>
+        <h1>Factura Generada</h1>
 
-        <h2>Factura</h2>
-
-        <div class="factura-datos">
-            <p><strong>Cliente:</strong> <span th:text="${venta.nombre_cliente}"></span></p>
-            <p><strong>NIT:</strong> <span th:text="${venta.nit_cliente}"></span></p>
+        <div>
+            <p><strong>Cliente:</strong> <span th:text="${venta.cliente.nombre}"></span></p>
+            <p><strong>NIT:</strong> <span th:text="${venta.cliente.nit}"></span></p>
+            <p><strong>Método de Pago:</strong> <span th:text="${venta.metodoPago.nombre}"></span></p>
+            <p><strong>Estado:</strong> <span th:text="${venta.estadoVenta.nombre}"></span></p>
             <p><strong>Fecha:</strong> <span th:text="${venta.fecha_venta}"></span></p>
-            <p><strong>Estado:</strong> <span th:text="${venta.estado}"></span></p>
+            <p><strong>Total:</strong> Q<span th:text="${venta.total}"></span></p>
         </div>
 
-        <table class="factura-tabla">
+        <table>
             <thead>
                 <tr>
                     <th>Producto</th>
-                    <th>Cantidad</th>
                     <th>Precio</th>
+                    <th>Cantidad</th>
                     <th>Subtotal</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="d : ${venta.detalles}">
                     <td th:text="${d.producto.nombre}"></td>
-                    <td th:text="${d.cantidad}"></td>
                     <td th:text="${d.precio_unitario}"></td>
+                    <td th:text="${d.cantidad}"></td>
                     <td th:text="${d.subtotal}"></td>
                 </tr>
             </tbody>

@@ -10,21 +10,29 @@ import com.aethercubix.model.Venta;
 
 
 
-
-public interface VentaRepository  extends JpaRepository<Venta, Long> {
+public interface VentaRepository extends JpaRepository<Venta, Long> {
     // Aquí puedes agregar métodos personalizados si es necesario
-    // Por ejemplo, para buscar ventas por cliente, fecha, etc.
+    // Por ejemplo, para buscar ventas por fecha, cliente, etc
+    /*
+     * 
+     * 
+     * 
+     * @Query("SELECT v FROM Venta v WHERE LOWER(v.cliente.nombre) LIKE LOWER(CONCAT('%', :filtro, '%')) " +
+           "OR LOWER(v.cliente.nit) LIKE LOWER(CONCAT('%', :filtro, '%'))")
+    List<Venta> findByClienteNombreOrNitContainingIgnoreCase(@Param("filtro") String filtro);
 
+     * 
+     * 
+     */
+ @Query("SELECT v FROM Venta v " +
+       "WHERE LOWER(v.cliente.nombre) LIKE LOWER(CONCAT('%', :filtro, '%')) " +
+       "OR LOWER(v.cliente.nit) LIKE LOWER(CONCAT('%', :filtro, '%')) " +
+       "OR LOWER(v.metodoPago.nombre) LIKE LOWER(CONCAT('%', :filtro, '%')) " +
+       "OR LOWER(v.estadoVenta.nombre) LIKE LOWER(CONCAT('%', :filtro, '%')) " +
+       "OR CAST(v.total AS string) LIKE CONCAT('%', :filtro, '%')")
+List<Venta> findByFiltro(@Param("filtro") String filtro);
 
-    @Query("SELECT DISTINCT v FROM Venta v JOIN v.detalles d JOIN d.producto p " +
-       "WHERE LOWER(v.nombre_cliente) LIKE %:filtro% " +
-       "OR LOWER(v.nit_cliente) LIKE %:filtro% " +
-       "OR CAST(v.total AS string) LIKE %:filtro% " +
-       "OR LOWER(v.metodo_pago) LIKE %:filtro% " +
-       "OR LOWER(v.estado) LIKE %:filtro% " +
-       "OR LOWER(p.nombre) LIKE %:filtro%")
-List<Venta> buscarPorCampos(@Param("filtro") String filtro);
 
 
     
-} 
+}

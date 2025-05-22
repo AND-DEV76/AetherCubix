@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Ventas</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/sales.css">
+    <title>Ventas</title>
+    <link rel="stylesheet" th:href="@{/css/sales.css}">
 </head>
 <body>
-    <div class="contenedor-principal">
-        <a class="volver" th:href="@{/}">X</a>
-        <h1>Lista de Ventas</h1>
+<div class="contenedor-principal">
+    <h1>Lista de Ventas</h1>
+    <a class="back-link" th:href="@{/}">X</a>
+    <br>
 
-<div class="acciones-globales">
-    <form th:action="@{/ventas}" method="get" class="form-busqueda">
-        <input type="text" name="filtro" placeholder="Buscar ventas por campos..." 
-               th:value="${param.filtro}">
+    <div class="acciones-globales">
+    <form class="form-busqueda" th:action="@{/ventas}" method="get">
+        <input type="text" name="filtro" placeholder="Buscar por cliente, NIT, estado, método o total" 
+               th:value="${filtro}">
         <button type="submit">Buscar</button>
     </form>
 </div>
-
 <br>
 
-        <div class="grid-ventas">
-            <div class="card-venta" th:each="venta : ${ventas}">
-                <h2 th:text="${venta.nombre_cliente}"></h2>
-                <p><strong>NIT:</strong> <span th:text="${venta.nit_cliente}"></span></p>
-                <p><strong>Total:</strong> Q<span th:text="${venta.total}"></span></p>
-                <p><strong>Método de Pago:</strong> <span th:text="${venta.metodo_pago}"></span></p>
-                <p><strong>Estado:</strong> <span th:text="${venta.estado}"></span></p>
+    <div class="grid-ventas" th:if="${ventas != null}">
+        <div class="card-venta" th:each="venta : ${ventas}">
+            <h2 th:text="${venta.nombre_cliente}">Nombre Cliente</h2>
+            <p><strong>NIT:</strong> <span th:text="${venta.nit_cliente}">123456</span></p>
+            <p><strong>Total:</strong> Q<span th:text="${venta.total}">0.00</span></p>
+            <p><strong>Método de Pago:</strong> <span th:text="${venta.metodo_pago}">Efectivo</span></p>
+            <p><strong>Estado:</strong> <span th:text="${venta.estado}">Completado</span></p>
 
-                <div class="productos">
-                    <p><strong>Productos Comprados:</strong></p>
-                    <ul>
-                        <li th:each="detalle : ${venta.detalles}">
-                            <span th:text="${detalle.producto.nombre}"></span> - 
-                            <span th:text="${detalle.cantidad}"></span> unid. - 
-                            Q<span th:text="${detalle.precio_unitario}"></span>
-                        </li>
-                    </ul>
-                </div>
-
-                <form th:action="@{/ventas/eliminar/{id}(id=${venta.id_venta})}" method="get">
-                    <button class="btn-eliminar" type="submit"
-                        onclick="return confirm('¿Estás seguro de eliminar esta venta?');">Eliminar</button>
-                </form>
+            <div class="productos">
+                <h4>Productos:</h4>
+                <ul>
+                    <li th:each="detalle : ${venta.detalles}">
+                        <span th:text="${detalle.producto}">Producto</span> -
+                        <span th:text="${detalle.cantidad}">1</span> unid. -
+                        Q<span th:text="${detalle.precio_unitario}">10.00</span>
+                    </li>
+                </ul>
             </div>
+
+            <form th:action="@{/ventas/eliminar/{id}(id=${venta.id_venta})}" method="get">
+                <button class="btn-eliminar" type="submit">Eliminar</button>
+            </form>
         </div>
     </div>
+</div>
 </body>
 </html>

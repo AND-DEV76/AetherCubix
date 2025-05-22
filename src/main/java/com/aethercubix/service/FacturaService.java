@@ -1,16 +1,24 @@
 package com.aethercubix.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.aethercubix.model.Cliente;
 import com.aethercubix.model.DetalleVenta;
+import com.aethercubix.model.EstadoVenta;
+import com.aethercubix.model.MetodoPago;
 import com.aethercubix.model.Producto;
 import com.aethercubix.model.Venta;
-import com.aethercubix.repository.DetalleVentaRepository;
+import com.aethercubix.repository.ClienteRepository;
+
+import com.aethercubix.repository.EstadoVentaRepository;
+import com.aethercubix.repository.MetodoPagoRepository;
 import com.aethercubix.repository.ProductoRepository;
 import com.aethercubix.repository.VentaRepository;
+import com.aethercubix.repository.DetalleVentaRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,59 +26,66 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class FacturaService {
-    
 
-    private final VentaRepository ventaRepository;
-    private final DetalleVentaRepository detalleRepository;
+
+       private final VentaRepository ventaRepository;
+    private final DetalleVentaRepository detalleVentaRepository;
     private final ProductoRepository productoRepository;
+    private final ClienteRepository clienteRepository;
+    private final MetodoPagoRepository metodoPagoRepository;
+    private final EstadoVentaRepository estadoVentaRepository;
 
     @Transactional
-    public Venta guardarFactura(Venta venta, List<Long> idProductos, List<Integer> cantidades) {
+    public Venta crearVenta(Long idCliente, Long idMetodo, Long idEstado, List<Long> productoIds, List<Integer> cantidades) {
+        Cliente cliente = clienteRepository.findById(idCliente).orElseThrow();
+        MetodoPago metodo = metodoPagoRepository.findById(idMetodo).orElseThrow();
+        EstadoVenta estado = estadoVentaRepository.findById(idEstado).orElseThrow();
+
+        Venta venta = new Venta();
+        venta.setCliente(cliente);
+        venta.setMetodoPago(metodo);
+        venta.setEstadoVenta(estado);
+        venta.setFecha_venta(LocalDate.now());
+        venta.setTotal(0.0); // Se calcula después
+
         List<DetalleVenta> detalles = new ArrayList<>();
+        double total = 0.0;
 
-        for (int i = 0; i < idProductos.size(); i++) {
-            Producto producto = productoRepository.findById(idProductos.get(i))
-                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        for (int i = 0; i < productoIds.size(); i++) {
+            Producto producto = productoRepository.findById(productoIds.get(i)).orElseThrow();
+            int cantidad = cantidades.get(i);
+            double precio = producto.getPrecio();
+            double subtotal = cantidad * precio;
 
-            int cantidadSolicitada = cantidades.get(i);
-
-            if (producto.getStock() < cantidadSolicitada) {
+            if (producto.getStock() < cantidad) {
                 throw new RuntimeException("Stock insuficiente para el producto: " + producto.getNombre());
             }
 
-            // Restar stock
-            producto.setStock(producto.getStock() - cantidadSolicitada);
+            producto.setStock(producto.getStock() - cantidad);
             productoRepository.save(producto);
 
-            // Crear el detalle
             DetalleVenta detalle = new DetalleVenta();
-            detalle.setProducto(producto);
-            detalle.setCantidad(cantidadSolicitada);
             detalle.setVenta(venta);
-            detalle.setPrecio_unitario(producto.getPrecio());
-            detalle.setSubtotal(producto.getPrecio() * cantidadSolicitada);
+            detalle.setProducto(producto);
+            detalle.setCantidad(cantidad);
+            detalle.setPrecio_unitario(precio);
+            detalle.setSubtotal(subtotal);
             detalles.add(detalle);
+            total += subtotal;
         }
 
+        venta.setTotal(total);
         venta.setDetalles(detalles);
-        Venta ventaGuardada = ventaRepository.save(venta);
-        detalleRepository.saveAll(detalles);
+        ventaRepository.save(venta);
+        detalleVentaRepository.saveAll(detalles);
 
-        return ventaGuardada;
+        return venta;
     }
+    
 
 
-    public List<Venta> obtenerTodasLasVentas() {
-    return ventaRepository.findAll();
-}
-
-public void eliminarVenta(Long id) {
-    ventaRepository.deleteById(id);
-}
 
 
-public List<Venta> buscarVentasPorFiltro(String filtro) {
-    return ventaRepository.buscarPorCampos(filtro.toLowerCase());
-}
+
 
 }

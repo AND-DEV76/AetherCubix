@@ -10,46 +10,45 @@
         <a class="back-link" th:href="@{/}">X</a>
 
         <h1>Factura de Venta</h1>
-
-        <form th:action="@{/factura}" method="post" class="factura-form">
-
-    <div class="cliente-info">
-    <div class="input-group">
-        <label for="nombre_cliente">Nombre del Cliente</label>
-        <input type="text" id="nombre_cliente" name="nombre_cliente"  required>
-    </div>
+<form th:action="@{/factura}" method="post">
 
     <div class="input-group">
-        <label for="nit_cliente">NIT</label>
-        <input type="text" id="nit_cliente" name="nit_cliente"  required>
+        <label>Cliente</label>
+        <select name="id_cliente" required>
+            <option th:each="c : ${clientes}" th:value="${c.id_cliente}" th:text="${c.nombre}"></option>
+        </select>
     </div>
+
+    <!-- MÉTODO DE PAGO -->
+<div class="input-group">
+    <label>Método de Pago</label>
+    <select name="id_metodo" required>
+        <option th:each="m : ${metodosPago}" th:value="${m.id_metodo}" th:text="${m.nombre}"></option>
+    </select>
+</div>
+
+<!-- ESTADO -->
+<div class="input-group">
+    <label>Estado</label>
+    <select name="id_estado" required>
+        <option th:each="e : ${estadosVenta}" th:value="${e.id_estado}" th:text="${e.nombre}"></option>
+    </select>
 </div>
 
 
-            <div class="metodo-estado">
-                <select name="metodo_pago">
-                    <option value="efectivo">Efectivo</option>
-                    <option value="tarjeta">Tarjeta</option>
-                </select>
+    <div class="productos-lista">
+        <div class="producto-item" th:each="p, iter : ${productos}">
+            <label>
+                <input type="checkbox" name="productoIds" th:value="${p.id_producto}" />
+                <span th:text="${p.nombre} + ' - Q' + ${p.precio}"></span>
+            </label>
+            <input type="number" name="cantidades" min="1" value="1" />
+        </div>
+    </div>
 
-                <select name="estado">
-                    <option value="pendiente">Pendiente</option>
-                    <option value="cancelado">Cancelado</option>
-                </select>
-            </div>
+    <button type="submit">Guardar Venta</button>
+</form>
 
-            <div id="productos" class="productos-lista">
-                <div class="producto-item" th:each="p : ${productos}">
-                    <label>
-                        <input type="checkbox" name="productoIds" th:value="${p.id_producto}" />
-                        <span th:text="${p.nombre} + ' - Q' + ${p.precio}"></span>
-                    </label>
-                    <input type="number" name="cantidades" min="1" value="1" />
-                </div>
-            </div>
-
-            <button type="submit">Guardar Venta</button>
-        </form>
     </div>
 
 </body>

@@ -4,10 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,17 +22,23 @@ public class Venta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_venta;
 
-    private String nombre_cliente;
-
-    private String nit_cliente;
-
     private LocalDate fecha_venta;
 
     private Double total;
 
-    private String metodo_pago;
+    @ManyToOne(fetch = FetchType.EAGER)
+@JoinColumn(name = "id_cliente")
+private Cliente cliente;
 
-    private String estado;
+@ManyToOne(fetch = FetchType.EAGER)
+@JoinColumn(name = "id_metodo")
+private MetodoPago metodoPago;
+
+@ManyToOne(fetch = FetchType.EAGER)
+@JoinColumn(name = "id_estado")
+private EstadoVenta estadoVenta;
+
+
 
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetalleVenta> detalles = new ArrayList<>();

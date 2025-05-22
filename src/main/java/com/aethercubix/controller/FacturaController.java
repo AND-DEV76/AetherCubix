@@ -1,86 +1,75 @@
 package com.aethercubix.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.aethercubix.dto.VentaDTO;
 import com.aethercubix.model.Venta;
+import com.aethercubix.repository.ClienteRepository;
+import com.aethercubix.repository.EstadoVentaRepository;
+import com.aethercubix.repository.MetodoPagoRepository;
 import com.aethercubix.repository.ProductoRepository;
 import com.aethercubix.service.FacturaService;
+import com.aethercubix.service.VentaService;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequestMapping("/factura")
 @RequiredArgsConstructor
 public class FacturaController {
 
+     private final FacturaService facturaService;
+    private final ClienteRepository clienteRepository;
+    private final MetodoPagoRepository metodoPagoRepository;
+    private final EstadoVentaRepository estadoVentaRepository;
+    private final ProductoRepository productoRepository;
+    private final VentaService ventaService;
 
-     private final ProductoRepository productoRepository;
-    private final FacturaService facturaService;
-
-    @GetMapping("/factura")
+    @GetMapping
     public String mostrarFormularioFactura(Model model) {
+        model.addAttribute("clientes", clienteRepository.findAll());
+        model.addAttribute("metodosPago", metodoPagoRepository.findAll());
+        model.addAttribute("estadosVenta", estadoVentaRepository.findAll());
         model.addAttribute("productos", productoRepository.findAll());
         return "factura";
     }
 
-
-    @PostMapping("/factura")
-public String procesarFactura(
-        @RequestParam String nombre_cliente,
-        @RequestParam String nit_cliente,
-        @RequestParam String metodo_pago,
-        @RequestParam String estado,
-        @RequestParam List<Long> productoIds,
-        @RequestParam List<Integer> cantidades,
-        Model model
-) {
-    try {
-        Venta venta = new Venta();
-        venta.setNombre_cliente(nombre_cliente);
-        venta.setNit_cliente(nit_cliente);
-        venta.setFecha_venta(LocalDate.now());
-        venta.setMetodo_pago(metodo_pago);
-        venta.setEstado(estado);
-
-        Venta guardada = facturaService.guardarFactura(venta, productoIds, cantidades);
-        model.addAttribute("venta", guardada);
+    @PostMapping
+    public String guardarFactura(@RequestParam Long id_cliente,
+                                 @RequestParam Long id_metodo,
+                                 @RequestParam Long id_estado,
+                                 @RequestParam List<Long> productoIds,
+                                 @RequestParam List<Integer> cantidades,
+                                 Model model) {
+        Venta venta = facturaService.crearVenta(id_cliente, id_metodo, id_estado, productoIds, cantidades);
+        model.addAttribute("venta", venta);
         return "venta";
-    } catch (RuntimeException e) {
-        model.addAttribute("error", e.getMessage());
-        model.addAttribute("productos", productoRepository.findAll());
-        return "factura"; // vuelve a mostrar el formulario con el error
     }
-}
+
 
 
 @GetMapping("/ventas")
-public String verVentas(@RequestParam(value = "filtro", required = false) String filtro, Model model) {
-    List<Venta> ventas;
-
+public String listarVentas(@RequestParam(value = "filtro", required = false) String filtro, Model model) {
+    List<VentaDTO> ventas;
+    
     if (filtro != null && !filtro.isEmpty()) {
-        ventas = facturaService.buscarVentasPorFiltro(filtro);
+        ventas = ventaService.buscarVentas(filtro);
     } else {
-        ventas = facturaService.obtenerTodasLasVentas();
+        ventas = ventaService.listarTodas(); // o como se llame tu método por defecto
     }
 
     model.addAttribute("ventas", ventas);
-    return "sales";
+    model.addAttribute("filtro", filtro); // para mantenerlo en el input
+    return "sales"; // o el nombre real de tu sales.html
 }
 
-
-
-@GetMapping("/ventas/eliminar/{id}")
-public String eliminarVenta(@PathVariable Long id) {
-    facturaService.eliminarVenta(id);
-    return "redirect:/ventas";
-}
 
 
     
