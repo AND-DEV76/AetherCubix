@@ -6,6 +6,9 @@
 </head>
 <body>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     <div class="factura-container">
         <a class="back-link" th:href="@{/}">X</a>
 
@@ -37,19 +40,38 @@
 
 
     <div class="productos-lista">
-        <div class="producto-item" th:each="p, iter : ${productos}">
-            <label>
-                <input type="checkbox" name="productoIds" th:value="${p.id_producto}" />
-                <span th:text="${p.nombre} + ' - Q' + ${p.precio}"></span>
-            </label>
-            <input type="number" name="cantidades" min="1" value="1" />
-        </div>
+        <div class="producto-item" th:each="p : ${productos}">
+    <label>
+        <input type="checkbox" name="productosSeleccionados" th:value="${p.id_producto}" />
+        <span th:text="${p.nombre} + ' - Q' + ${p.precio}"></span>
+    </label>
+    <input type="number" th:name="'cantidad_' + ${p.id_producto}" min="1" value="1" />
+</div>
+
     </div>
 
     <button type="submit">Guardar Venta</button>
 </form>
 
     </div>
+
+
+
+
+
+    <script th:if="${error != null}">
+    Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: '[[${error}]]', // si usas Thymeleaf < 3
+        toast: true,
+        position: 'top-end',
+        timer: 4000,
+        timerProgressBar: true,
+        showConfirmButton: false
+    });
+</script>
+
 
 </body>
 </html>
