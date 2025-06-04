@@ -8,6 +8,8 @@
 <body>
     <div class="factura-container">
         <a class="back-link" th:href="@{/}">X</a>
+        
+
         <h1>Factura Generada</h1>
 
         <div>
@@ -37,6 +39,9 @@
                 </tr>
             </tbody>
         </table>
+        <a th:href="@{/ventas/pdf/{id}(id=${venta.id_venta})}" target="_blank" class="pdf-button">Descargar PDF</a>
+
     </div>
+    
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.aethercubix.controller;
 
+import java.io.OutputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -9,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aethercubix.dto.VentaDTO;
+import com.aethercubix.model.Venta;
 import com.aethercubix.service.VentaService;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +45,28 @@ public class VentaController {
         ventaService.eliminarVenta(id);
         return "redirect:/ventas";
     }
+
+
+
+    @GetMapping("/pdf/{id}")
+public void generarPdf(@PathVariable Long id, HttpServletResponse response) {
+    try {
+        Venta venta = ventaService.obtenerVentaPorId(id); // debes crear este método
+        ByteArrayOutputStream baos = ventaService.generarFacturaPdf(venta);
+
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=factura_" + id + ".pdf");
+        response.setContentLength(baos.size());
+
+        OutputStream os = response.getOutputStream();
+        baos.writeTo(os);
+        os.flush();
+    } catch (Exception e) {
+        e.printStackTrace();
+        throw new RuntimeException("Error al generar el PDF");
+    }
+}
+
+    
     
 }
